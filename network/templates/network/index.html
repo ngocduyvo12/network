@@ -1,5 +1,12 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block body %}
-    TODO
+<div id="compose-view">
+    <h4>New Post</h4>
+    <form id="compose-form">
+        <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
+        <input id="newPost" type="submit" class="btn btn-primary"/>
+    </form>
+</div>
 {% endblock %}
