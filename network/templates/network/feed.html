@@ -1,0 +1,35 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+
+{% block script %}
+    <script src="{% static 'network/network.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+
+<!-- if user is authenticated and not the owner of the profile then let follow or un follow -->
+<div id="message-view">
+</div>
+<div id="compose-view">
+    {% if user.is_authenticated%}    
+    <div id="profile-view">  
+        {% for post in posts %}
+        <div class="card">
+            <div class="card-body">
+                <a href="/profile/{{post.poster.id}}" class="card-title">{{post.poster}}</a>
+                <p class="card-text">{{post.content}}</p>
+                <p class="card-text">{{post.timestamp}}</p>
+                <a href="#" class="btn btn-success">Like</a>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+    {% endif %}
+
+
+</div>
+
+    {% endblock %}
+    

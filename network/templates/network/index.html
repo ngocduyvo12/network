@@ -1,12 +1,55 @@
 {% extends "network/layout.html" %}
 {% load static %}
 
+
+{% block script %}
+    <script src="{% static 'network/network.js' %}"></script>
+{% endblock %}
+
 {% block body %}
+{% if user.is_authenticated %}
+<div id="warning-view">
+</div>
+
 <div id="compose-view">
     <h4>New Post</h4>
     <form id="compose-form">
-        <textarea class="form-control" id="compose-body" placeholder="Body"></textarea>
+        <textarea class="form-control" id="compose-body" placeholder="Body" required></textarea>
+        <input type="hidden" id="userID" name="userID" value="{{user.id}}">
         <input id="newPost" type="submit" class="btn btn-primary"/>
     </form>
 </div>
+{% endif %}
+
+
+<div id="posts-view">
+    {% for post in posts%}
+    <div class="card">
+        <div class="card-body">
+            <a href="/profile/{{post.poster.id}}" class="card-title">{{post.poster}}</a>
+
+            <p class="card-text" id="post-{{post.id}}" value="{{post.content}}">{{post.content}}</p>
+
+            <div id="post_content_{{post.id}}" style="display: none;">
+                <textarea class="form-control" id="update_content_{{post.id}}">{{post.content}}</textarea>
+                <button value="{{post.id}}" class="btn btn-primary" onclick="save_post({{post.id}})">Save</button>
+            </div>
+
+            <button id="like_button" value="{{post.id}}" data-count="{{post.likes.count}}" class="btn btn-success" onclick="like({{post.id}})"><i class="icon-thumbs-up-alt"></i></button>
+            <span id="post_like_{{post.id}}" data-count="{{post.likes.count}}">
+                {{post.likes.count}}
+            </span>
+            
+            <p class="card-text">{{post.timestamp}}</p>
+            
+            {% if post.poster.id == user.id %}
+            <button value="{{post.id}}" class="btn btn-success" onclick="edit_post({{post.id}})">Edit</button>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="profile-view"></div>
+
 {% endblock %}

@@ -1,0 +1,54 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+
+{% block script %}
+    <script src="{% static 'network/network.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+
+<!-- if user is authenticated and not the owner of the profile then let follow or un follow -->
+<div id="message-view">
+</div>
+<div id="compose-view">
+    {% if user.is_authenticated%}
+    {% if not owner %}
+    <button type="button" id="follow" class="btn btn-info" value="{{id}}">Follow</button>
+    <button type="button" id="unfollow" class="btn btn-warning" value="{{id}}">Unfollow</button>
+    {% endif %}
+    {% endif %}
+    
+    <div id="profile-view">
+        
+        {% if empty %}
+        <div class="alert alert-success" role="alert">
+            This user has not posted anything
+        </div>
+        {% else %}
+        {% for post in posts %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{post.poster}}</h5>
+                <p class="card-text" id="post-{{post.id}}" value="{{post.content}}">{{post.content}}</p>
+                <div id="post_content_{{post.id}}" style="display: none;">
+                    <textarea class="form-control" id="update_content_{{post.id}}">{{post.content}}</textarea>
+                    <button value="{{post.id}}" class="btn btn-primary" onclick="save_post({{post.id}})">Save</button>
+                </div>
+                <p class="card-text">{{post.timestamp}}</p>
+                {% if post.poster.id == user.id %}
+                <button value="{{post.id}}" class="btn btn-success" onclick="edit_post({{post.id}})">Edit</button>
+                {% endif %}
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        
+    </div>
+</div>
+<!--     
+<div id="posts-view">
+</div> -->
+    {% endblock %}
+    

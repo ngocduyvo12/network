@@ -1,4 +1,43 @@
-textarea {
-    min-height: 400px;
+#compose-body {
+    min-height: 100px;
     width: 50%;
+    margin-left: 20px;
+}
+
+h4 {
+    margin-left: 20px;
+}
+
+a {
+    cursor: pointer;
+}
+
+#display-follow {
+    border: none;
+    background-color: #f8f9fa!important;
+}
+#display-follow:focus {
+    outline: none;
+}
+
+.fakelink {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#follow {
+    margin-left: 20px;
+}
+
+#newPost {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
