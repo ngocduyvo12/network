@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 from .models import User, Post
 
@@ -14,12 +15,16 @@ from .models import User, Post
 def index(request):
     #get posts from data base
     posts = Post.objects.all()
-
-    #check ownership
     # Return posts in reverse chronologial order
     posts = posts.order_by("-timestamp").all()
+    paginator = Paginator(posts, 10)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    #check ownership
     return render(request, "network/index.html", {
         "posts": posts,
+        "page_obj": page_obj,
     })
 
 # def get_posts(request, page):
